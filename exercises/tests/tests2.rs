@@ -11,7 +11,12 @@
 #[cfg(test)]
 mod tests {
     #[test]
-    fn you_can_assert_eq() {
-        assert_eq!();
+    fn test_assert_eq_pass() {
+        assert_eq!(3, 3);
+    }
+
+    #[test]
+    fn test_assert_eq_fail() {
+        assert_eq!(3, 4); 
     }
 }
