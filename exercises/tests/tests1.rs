@@ -12,10 +12,16 @@
 
 // I AM NOT DONE
 
+
 #[cfg(test)]
 mod tests {
     #[test]
-    fn you_can_assert() {
-        assert!();
+    fn test_assert_true() {
+        assert!(true); 
+    }
+
+    #[test]
+    fn test_assert_false() {
+        assert!(false); 
     }
 }
