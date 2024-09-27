@@ -16,12 +16,7 @@
 #[cfg(test)]
 mod tests {
     #[test]
-    fn test_assert_true() {
-        assert!(true); 
-    }
-
-    #[test]
-    fn test_assert_false() {
-        assert!(false); 
+    fn you_can_assert() {
+        assert!(true);
     }
 }
