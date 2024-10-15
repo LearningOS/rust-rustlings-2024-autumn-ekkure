@@ -2,7 +2,7 @@
 	heap
 	This question requires you to implement a binary heap function
 */
-// I AM NOT DONE
+
 
 use std::cmp::Ord;
 use std::default::Default;
@@ -38,6 +38,21 @@ where
 
     pub fn add(&mut self, value: T) {
         //TODO
+        self.items.push(value);
+        self.count += 1;
+        let mut index = self.count;
+        while index > 1{
+            let parent_idx = self.parent_idx(index);
+            /*WTF 这里写反了 或者在前加否定*/  
+            if !(self.comparator)(&self.items[parent_idx], &self.items[index]){
+                //break;
+                self.items.swap(parent_idx, index);
+                index = parent_idx;
+            }else{
+                break;
+            }
+            
+        }
     }
 
     fn parent_idx(&self, idx: usize) -> usize {
@@ -58,7 +73,19 @@ where
 
     fn smallest_child_idx(&self, idx: usize) -> usize {
         //TODO
-		0
+		let lc = self.left_child_idx(idx);
+        let rc = self.right_child_idx(idx);
+        if rc <= self.count{
+            if (self.comparator)(&self.items[lc], &self.items[rc]){
+                lc
+            }else{
+                rc
+            }
+        }else if lc <= self.count{
+            lc
+        }else{
+            idx
+        }
     }
 }
 
@@ -85,7 +112,47 @@ where
 
     fn next(&mut self) -> Option<T> {
         //TODO
-		None
+        if self.count == 0 {
+            return None;
+        }
+
+        // 弹出堆顶元素，这是最小或最大元素
+        let result = self.items.swap_remove(1);
+        self.count -= 1;
+
+        if self.count > 0 {
+            // 从数组末尾取出最后一个元素，并将其重新插入到堆的顶部
+            let last_item = self.items.pop().unwrap();
+            if !self.items.is_empty() {
+                self.items.insert(1, last_item);
+            }
+
+            // 重新调整堆
+            let mut idx = 1;
+            while self.children_present(idx) {
+                let swap_idx = self.smallest_child_idx(idx);
+                if (self.comparator)(&self.items[swap_idx], &self.items[idx]) {
+                    self.items.swap(idx, swap_idx);
+                    idx = swap_idx;
+                } else {
+                    break;
+                }
+            }
+            /*
+            let mut idx = 1;
+            while self.children_present(idx){
+                let swap_idx = self.smallest_child_idx(idx);
+                if (self.comparator)(&self.items[swap_idx], &self.items[idx]){
+                    self.item.sawp(idx, swap_idx);
+                    idx = swap_idx;
+                }else{
+                    break;
+                }
+            }
+             */
+        }
+
+        Some(result)
     }
 }
 
